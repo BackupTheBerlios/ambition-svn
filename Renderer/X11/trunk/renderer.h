@@ -1,8 +1,11 @@
-#include <X11/Xlib.h>
-
 #ifndef AMBITION_RENDERER
 
 #define AMBITION_RENDERER
+#include <X11/Xlib.h>
+#include <X11/Xutil.h>
+// Xft Include causes parse error
+// #include <X11/Xft/Xft.h>
+
 #include "types.h"
 
 // Core Renderer Functions
@@ -19,7 +22,7 @@ int _X11_flush(ARenderer * Renderer);
 
 int ambR_draw_pixel(AWindow * Wnd, int x, int y);
 int ambR_draw_line(AWindow * Wnd, int xA, int yA, int xB, int yB);
-int ambR_draw_shape(AWindow * Wnd, XPoint * Coords);
+int ambR_draw_shape(AWindow * Wnd, int * Coords[]);
 int ambR_draw_text(AWindow * Wnd, char * text[], int x, int y);
 
 #endif /* Renderer */

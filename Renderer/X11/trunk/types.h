@@ -29,8 +29,8 @@ typedef struct _Widget{
 	int y;			// Y position
 	int width;		// Width
 	int height;		// Height
+	void (*draw)(AWindow*,int);	// Pointer to "draw" callback
 	char * tag[];		// Tag data
-        void (*draw)(AWindow*,int);	// Pointer to "draw" callback
 } AWidget;
 
 /* Defines a union of all types that require callbacks [Platform Independent] */

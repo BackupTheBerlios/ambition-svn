@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+
 #include "renderer.h"
 
 AWindow ambW_create(ARenderer * Renderer, char * wndTitle[], int x, int y, unsigned int height, unsigned int width){
@@ -38,6 +39,8 @@ AWindow ambW_create(ARenderer * Renderer, char * wndTitle[], int x, int y, unsig
 	XSetFillStyle(Renderer->rDisplay, tWindow.XGC, FillSolid);
 	// Set line width and style
 	XSetLineAttributes(Renderer->rDisplay, tWindow.XGC, 3, LineSolid, CapRound, JoinRound);
+	// Set Window title
+	ambW_set_title(&tWindow,wndTitle);
 	// Return the AWindow object
 	return tWindow;
 }
@@ -52,13 +55,21 @@ void ambW_draw(AWindow * Wnd){
 	return;
 }
 
-int ambW_load_font(AWindow * Wnd, char * Font[]){
+int ambW_set_font(AWindow * Wnd, char * Font[]){
 	Wnd->XFont = (*XLoadQueryFont(Wnd->Renderer->rDisplay, *Font));
 	if (!Wnd->XFont.fid) {
 		fprintf(stderr, "XLoadQueryFont: failed loading font '%s'\n", Font);
 		return -1;
 	}
 	XSetFont(Wnd->Renderer->rDisplay, Wnd->XGC, Wnd->XFont.fid);
+	return 0;
+}
+
+int ambW_set_title(AWindow * Wnd, char * wndTitle[]){
+	// Set the Window Title
+	XTextProperty tWndName;
+	XStringListToTextProperty(wndTitle,1,&tWndName);
+	XSetWMName(Wnd->Renderer->rDisplay,Wnd->XWindow,&tWndName);
 	return 0;
 }
 

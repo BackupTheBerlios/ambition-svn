@@ -55,9 +55,9 @@ int ambR_draw_line(AWindow * Wnd, int xA, int yA, int xB, int yB){
 	return 0;
 }
 
-int ambR_draw_shape(AWindow * Wnd, XPoint * Coords){
-	int pCount = sizeof(Coords)/sizeof(XPoint);
-	XDrawLines(Wnd->Renderer->rDisplay, Wnd->XWindow, Wnd->XGC, Coords, pCount, CoordModeOrigin);
+int ambR_draw_shape(AWindow * Wnd, int * Coords[]){
+	/* int pCount = sizeof(Coords)/sizeof(XPoint);
+	XDrawLines(Wnd->Renderer->rDisplay, Wnd->XWindow, Wnd->XGC, Coords, pCount, CoordModeOrigin); */
 	return 0;
 }
 
