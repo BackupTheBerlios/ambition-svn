@@ -18,16 +18,21 @@ int main(int argc, char * argv[]){
 	printf("Show Window\n");
 	// Show the new window
 	ambW_show(&myWin);
-	// Loop
-	ambR_draw_line(&myWin,90,10,10,50);
+	ambR_draw_arc(&myWin,50,50,50,0);
+	ambR_draw_arc(&myWin,50,50,50,1);
+	ambR_draw_arc(&myWin,50,50,50,2);
+	ambR_draw_arc(&myWin,50,50,50,3);
+	/*ambR_draw_line(&myWin,90,10,10,50);
 	ambR_draw_line(&myWin,90,90,10,50);
 	ambR_draw_line(&myWin,50,30,50,70);
-//	char * fName[20];
-//	*fName = "*-bitstream-*-24-*";
-//	ambW_load_font(&myWin,fName);
-//	char * tText[100];
-//	*tText = "Hello, Ambition";
-//	ambR_draw_text(&myWin,tText,10,10);
+	char* fName = "*-helvetica-*-12-*";
+	printf("Set Font\n");
+	ambW_set_font(&myWin,fName);
+	//char * tText[100];
+	char *tText = "Ambition";
+	printf("Draw\n");
+	ambR_draw_text(&myWin,tText,100,10);*/
+	printf("Main\n");
 	ambR_main(myRenderer);
 	printf("Close\n");
 	// Close the Renderer

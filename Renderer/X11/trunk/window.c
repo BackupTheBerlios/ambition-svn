@@ -15,7 +15,7 @@ AWindow ambW_create(ARenderer * Renderer, char * wndTitle[], int x, int y, unsig
 	tWindow.XWindow = XCreateSimpleWindow(Renderer->rDisplay,
                           RootWindow(Renderer->rDisplay, screen_num),
                           x, y,
-                          width, height,
+                          height, width,
                           3, BlackPixel(Renderer->rDisplay, screen_num),
                           WhitePixel(Renderer->rDisplay, screen_num));
 	// Define the defaults for a new Graphics Context
@@ -30,7 +30,6 @@ AWindow ambW_create(ARenderer * Renderer, char * wndTitle[], int x, int y, unsig
 		fprintf(stderr, "XCreateGC: \n"); // Couldn't create a graphics context
 		exit(-1); // Can't go on, since we need a GC for the rest of the app :-)
 	}
-	printf("Set bg\n");
 	// Set foreground to black
 	XSetForeground(Renderer->rDisplay, tWindow.XGC, BlackPixel(Renderer->rDisplay, screen_num));
 	// Set background to white
@@ -47,7 +46,7 @@ AWindow ambW_create(ARenderer * Renderer, char * wndTitle[], int x, int y, unsig
 
 void ambW_draw(AWindow * Wnd){
 	int i = 0;
-	for(i = 0; i < Wnd->cCount; i++){
+	for(i = 0; i < Wnd->cCount; i = i +1){
 		// Make the child draw itself
 		Wnd->Children[i]->draw(Wnd,i);//Wnd->Children[i]);
 		XFlush(Wnd->Renderer->rDisplay);
@@ -55,8 +54,15 @@ void ambW_draw(AWindow * Wnd){
 	return;
 }
 
-int ambW_set_font(AWindow * Wnd, char * Font[]){
-	Wnd->XFont = (*XLoadQueryFont(Wnd->Renderer->rDisplay, *Font));
+int ambW_add_child(AWindow * Wnd, AWidget * Child){
+	Wnd->Children[Wnd->cCount] = Child;
+	Wnd->cCount = Wnd->cCount + 1;
+	return 0;
+}
+
+int ambW_set_font(AWindow * Wnd, char * Font){
+	//char* font_name = "*-helvetica-*-12-*";
+	Wnd->XFont = (*XLoadQueryFont(Wnd->Renderer->rDisplay, Font));
 	if (!Wnd->XFont.fid) {
 		fprintf(stderr, "XLoadQueryFont: failed loading font '%s'\n", Font);
 		return -1;

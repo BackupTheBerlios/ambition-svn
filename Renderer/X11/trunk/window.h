@@ -6,7 +6,8 @@
 #include "renderer.h"
 AWindow ambW_create(ARenderer * Renderer, char * wndTitle[], int x, int y, unsigned int height, unsigned int width);
 void ambW_draw(AWindow * Wnd);
-int ambW_load_font(AWindow * Wnd, char * Font[]);
+int ambW_add_child(AWindow * Wnd, AWidget * Child);
+int ambW_set_font(AWindow * Wnd, char * Font);
 int ambW_set_title(AWindow * Wnd, char * wndTitle[]);
 int ambW_show(AWindow * Wnd);
 int ambW_destroy(AWindow * Wnd);
