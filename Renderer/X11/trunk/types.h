@@ -25,6 +25,11 @@ typedef struct _Window{
 
 typedef struct _Widget{
         AWindow * Parent;	// Pointer to parent Window
+	int x;			// X position
+	int y;			// Y position
+	int width;		// Width
+	int height;		// Height
+	char * tag[];		// Tag data
         void (*draw)(AWindow*,int);	// Pointer to "draw" callback
 } AWidget;
 

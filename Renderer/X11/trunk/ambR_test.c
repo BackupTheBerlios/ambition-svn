@@ -22,6 +22,12 @@ int main(int argc, char * argv[]){
 	ambR_draw_line(&myWin,90,10,10,50);
 	ambR_draw_line(&myWin,90,90,10,50);
 	ambR_draw_line(&myWin,50,30,50,70);
+//	char * fName[20];
+//	*fName = "*-bitstream-*-24-*";
+//	ambW_load_font(&myWin,fName);
+//	char * tText[100];
+//	*tText = "Hello, Ambition";
+//	ambR_draw_text(&myWin,tText,10,10);
 	ambR_main(myRenderer);
 	printf("Close\n");
 	// Close the Renderer

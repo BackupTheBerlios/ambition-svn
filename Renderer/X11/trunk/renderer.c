@@ -27,12 +27,9 @@ int ambR_close(ARenderer * Renderer){
 int ambR_main(ARenderer * Renderer){
 	XEvent Next;
 	while (1) {
-		printf("Get next event\n");
 		XNextEvent(Renderer->rDisplay, &Next);
-		printf("Switch\n");
 		switch (Next.type) {
 			case Expose:
-				printf("Expose\n");
 				if(Next.xexpose.count > 0)
 					break;
 				break;
