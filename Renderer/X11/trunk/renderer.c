@@ -49,7 +49,7 @@ int ambR_register(AObject * Object, int Event, void (*AFunc)(AObject*)){
 }
 
 int ambR_draw_pixel(AWindow * Wnd, int x, int y){
-	XDrawPoint(Wnd->Renderer->rDisplay, Wnd->XWindow, Wnd->XGC, 5, 5);
+	XDrawPoint(Wnd->Renderer->rDisplay, Wnd->XWindow, Wnd->XGC, x, y);
 	return 0;
 }
 
