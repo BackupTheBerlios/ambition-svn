@@ -27,12 +27,12 @@ int ambR_close(ARenderer * Renderer){
 int ambR_main(ARenderer * Renderer){
 	XEvent Next;
 	int i = 0;
+	int j = 0;
 	for(i = 0; i < Renderer->cCount; i = i +1){
 		// Register for expose events on all children
 		AWindow * Wnd = Renderer->Children[i];
 		XSelectInput(Renderer->rDisplay, Wnd->XWindow, ExposureMask);
 	}
-	int j = 0;
 	while (1) {
 		XNextEvent(Renderer->rDisplay, &Next);
 		switch (Next.type) {

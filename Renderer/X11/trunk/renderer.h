@@ -4,7 +4,7 @@
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 // Xft Include causes parse error
-// #include <X11/Xft/Xft.h>
+/*#include <X11/Xft/Xft.h>*/
 
 #include "types.h"
 

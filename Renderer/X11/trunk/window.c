@@ -60,9 +60,10 @@ int ambW_add_child(AWindow * Wnd, AWidget * Child){
 	return 0;
 }
 
-int ambW_set_font(AWindow * Wnd, char * Font){
-	//char* font_name = "*-helvetica-*-12-*";
-	Wnd->XFont = (*XLoadQueryFont(Wnd->Renderer->rDisplay, Font));
+int ambW_set_font(AWindow * Wnd, char * Font, int size){
+	char* fString;
+	sprintf(fString,"*-%s-*-%d-*",Font,size);
+	Wnd->XFont = (*XLoadQueryFont(Wnd->Renderer->rDisplay, fString));
 	if (!Wnd->XFont.fid) {
 		fprintf(stderr, "XLoadQueryFont: failed loading font '%s'\n", Font);
 		return -1;
