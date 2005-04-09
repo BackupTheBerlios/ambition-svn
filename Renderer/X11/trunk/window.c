@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "renderer.h"
+#include "window.h"
 
 AWindow ambW_create(ARenderer * Renderer, char * wndTitle[], int x, int y, unsigned int height, unsigned int width){
 	AWindow tWindow;
@@ -54,6 +54,11 @@ void ambW_draw(AWindow * Wnd){
 	return;
 }
 
+int ambW_resize(AWindow * Wnd, int width, int height){
+	XResizeWindow(Wnd->Renderer->rDisplay, Wnd->XWindow, width, height);
+	return 0;
+}
+
 int ambW_add_child(AWindow * Wnd, AWidget * Child){
 	Wnd->Children[Wnd->cCount] = Child;
 	Wnd->cCount = Wnd->cCount + 1;
@@ -61,14 +66,19 @@ int ambW_add_child(AWindow * Wnd, AWidget * Child){
 }
 
 int ambW_set_font(AWindow * Wnd, char * Font, int size){
+	XftPattern * FName, * IName;
+	XftResult * fResult;
 	char* fString;
-	sprintf(fString,"*-%s-*-%d-*",Font,size);
-	Wnd->XFont = (*XLoadQueryFont(Wnd->Renderer->rDisplay, fString));
-	if (!Wnd->XFont.fid) {
-		fprintf(stderr, "XLoadQueryFont: failed loading font '%s'\n", Font);
-		return -1;
-	}
-	XSetFont(Wnd->Renderer->rDisplay, Wnd->XGC, Wnd->XFont.fid);
+	/*sprintf(fString,"*-%s-*-%d-*",Font,size);*/
+	sprintf(fString,"%s-%d:%d=%d",Font,size,XFT_ANTIALIAS,1);
+	FName = XftNameParse(fString);
+	IName = XftFontMatch (Wnd->Renderer->rDisplay, DefaultScreen(Wnd->Renderer->rDisplay), FName, fResult);
+	Wnd->XFont = *XftFontOpenPattern (Wnd->Renderer->rDisplay, IName);
+	//if (!Wnd->XFont.fid) {
+	//	fprintf(stderr, "XLoadQueryFont: failed loading font '%s'\n", Font);
+	//	return -1;
+	//}
+	//XSetFont(Wnd->Renderer->rDisplay, Wnd->XGC, Wnd->XFont.fid);
 	return 0;
 }
 

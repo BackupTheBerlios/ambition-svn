@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <X11/Xlib.h>
 
-#include "error.h"
 #include "renderer.h"
 
 int ambR_init(ARenderer * Renderer){

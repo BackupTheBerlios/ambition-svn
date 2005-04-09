@@ -5,7 +5,7 @@
 /* Defines the ARenderer type [Platform Dependent] */
 
 typedef struct _Renderer{
-        Display * rDisplay;	// Pointer to X11 Display
+	Display * rDisplay;	// Pointer to X11 Display
         int cCount;		// Number of child Windows
         struct _Window * Children[10];	// Array of Pointers to child Windows
 } ARenderer;
@@ -15,7 +15,7 @@ typedef struct _Renderer{
 typedef struct _Window{
         ARenderer * Renderer;	// Pointer to parent Renderer
 	GC XGC;			// X11 Graphics Context for Drawing
-	XFontStruct XFont;	// Current X11 Font
+	XftFont	 XFont;		// Current X11 Font
         Window XWindow;		// Target X11 Window
         int cCount;		// Number of child Widgets
         struct _Widget * Children[10];	// Array of Pointers to child Widgets
