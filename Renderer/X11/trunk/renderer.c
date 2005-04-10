@@ -57,7 +57,7 @@ int ambR_register(AObject * Object, int Event, void (*AFunc)(AObject*)){
 
 int ambR_add_child(ARenderer * Renderer, AWindow * Wnd){
 	Renderer->Children[Renderer->cCount] = Wnd;
-	Renderer->cCount = Renderer->cCount + 1;
+	Renderer->cCount += 1;
 	return 0;
 }
 
