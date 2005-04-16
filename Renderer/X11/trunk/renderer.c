@@ -61,13 +61,13 @@ int ambR_add_child(ARenderer * Renderer, AWindow * Wnd){
 	return 0;
 }
 
-int ambR_draw_pixel(AWindow * Wnd, int x, int y){
-	XDrawPoint(Wnd->Renderer->rDisplay, Wnd->XWindow, Wnd->XGC, x, y);
-	return 0;
-}
 
 int ambR_draw_line(AWindow * Wnd, int xA, int yA, int xB, int yB){
-	XDrawLine(Wnd->Renderer->rDisplay, Wnd->XWindow, Wnd->XGC, yA, xA, yB, xB);
+	cairo_move_to(Wnd->Canvas,yA,xA);
+	cairo_line_to(Wnd->Canvas,yB,xB);
+	cairo_set_line_width (Wnd->Canvas, 3);
+	cairo_stroke(Wnd->Canvas);
+	//XDrawLine(Wnd->Renderer->rDisplay, Wnd->XWindow, Wnd->XGC, yA, xA, yB, xB);
 	return 0;
 }
 
@@ -81,31 +81,27 @@ int ambR_draw_shape(AWindow * Wnd, int * Coords[]){
    Text drawing functions work, debug client code instead if it segfaults */
 
 int ambR_draw_text(AWindow * Wnd, char * text, int x, int y){
-	XDrawString(Wnd->Renderer->rDisplay, Wnd->XWindow, Wnd->XGC, y, x, text, strlen(text));
+	//XDrawString(Wnd->Renderer->rDisplay, Wnd->XWindow, Wnd->XGC, y, x, text, strlen(text));
+	cairo_select_font(Wnd->Canvas, "Serif", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
+	cairo_scale_font(Wnd->Canvas, 32.0);
+	cairo_move_to(Wnd->Canvas, x, y);
+	cairo_show_text(Wnd->Canvas, text);
 	return 0;
 }
 
-int ambR_draw_arc(AWindow * Wnd, int x, int y, int r, int Orient){
+int ambR_draw_arc(AWindow * Wnd, int xA, int yA, int radius, int Orient){
 	int AStart, AEnd;
+	printf("WARNING: FUNCTION INCOMPLETE\n");
 	switch(Orient){
-	case 0: // Down and Left
-		AStart = 270*64;
-		AEnd = 180*64;
-		break;
-	case 1: // Down and Right
-		AStart = 180*64;
-		AEnd = 90*64;
-		break;
-	case 2: // Up and Right
-		AStart = 90*64;
+	case 0: // Up
+		AStart = 1.5;
 		AEnd = 0;
 		break;
-	case 3:
-		// Up and Left
-		AStart = 270*64;
-		AEnd = 360 * 64;
+	case 1: // Down
+		AStart = 0;
+		AEnd = 1.5;
 		break;
 	}
-	XDrawArc(Wnd->Renderer->rDisplay, Wnd->XWindow, Wnd->XGC, x-r, y-r, r, r, AStart, AEnd);
+	cairo_arc(Wnd->Canvas,xA,yA,radius,AStart,AEnd);
 	return 0;
 }

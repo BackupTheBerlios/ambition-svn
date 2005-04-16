@@ -9,6 +9,7 @@ AWindow ambW_create(ARenderer * Renderer, char * wndTitle[], int x, int y, unsig
 	tWindow.Renderer = Renderer;
 	// Initialize the Child Count
 	tWindow.cCount = 0;
+	tWindow.Canvas = cairo_create();
 	// Get the Screen Number
 	int screen_num = DefaultScreen(Renderer->rDisplay);
 	// Create an X Window for our AWindow to use
@@ -18,26 +19,9 @@ AWindow ambW_create(ARenderer * Renderer, char * wndTitle[], int x, int y, unsig
                           height, width,
                           3, BlackPixel(Renderer->rDisplay, screen_num),
                           WhitePixel(Renderer->rDisplay, screen_num));
-	// Define the defaults for a new Graphics Context
-	XGCValues gVals;
-	// gVals = CapButt | JoinBevel;
-	// gVals = 0;
-	// Set the bitmask for the Graphics Context
-	unsigned long gMask = 0;
-	// Get a Graphics Context for the window
-	tWindow.XGC = XCreateGC(Renderer->rDisplay, tWindow.XWindow, gMask, &gVals);
-	if (tWindow.XGC < 0) {
-		fprintf(stderr, "XCreateGC: \n"); // Couldn't create a graphics context
-		exit(-1); // Can't go on, since we need a GC for the rest of the app :-)
-	}
-	// Set foreground to black
-	XSetForeground(Renderer->rDisplay, tWindow.XGC, BlackPixel(Renderer->rDisplay, screen_num));
-	// Set background to white
-	XSetBackground(Renderer->rDisplay, tWindow.XGC, WhitePixel(Renderer->rDisplay, screen_num));
-	// Set fill to solid
-	XSetFillStyle(Renderer->rDisplay, tWindow.XGC, FillSolid);
-	// Set line width and style
-	XSetLineAttributes(Renderer->rDisplay, tWindow.XGC, 3, LineSolid, CapRound, JoinRound);
+	cairo_set_target_drawable(tWindow.Canvas, tWindow.Renderer->rDisplay, tWindow.XWindow);
+	cairo_set_rgb_color(tWindow.Canvas,0.0,0.0,0.0);
+	cairo_set_line_cap(tWindow.Canvas,1);
 	// Set Window title
 	ambW_set_title(&tWindow,wndTitle);
 	// Return the AWindow object
@@ -65,11 +49,10 @@ int ambW_add_child(AWindow * Wnd, AWidget * Child){
 	return 0;
 }
 
-int ambW_set_font(AWindow * Wnd, char * Font, int size){
+/*int ambW_set_font(AWindow * Wnd, char * Font, int size){
 	XftPattern * FName, * IName;
 	XftResult * fResult;
 	char* fString;
-	/*sprintf(fString,"*-%s-*-%d-*",Font,size);*/
 	sprintf(fString,"%s-%d:%d=%d",Font,size,XFT_ANTIALIAS,1);
 	FName = XftNameParse(fString);
 	IName = XftFontMatch (Wnd->Renderer->rDisplay, DefaultScreen(Wnd->Renderer->rDisplay), FName, fResult);
@@ -80,7 +63,7 @@ int ambW_set_font(AWindow * Wnd, char * Font, int size){
 	//}
 	//XSetFont(Wnd->Renderer->rDisplay, Wnd->XGC, Wnd->XFont.fid);
 	return 0;
-}
+}*/
 
 int ambW_set_title(AWindow * Wnd, char * wndTitle[]){
 	// Set the Window Title
