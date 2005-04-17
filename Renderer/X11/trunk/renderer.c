@@ -81,10 +81,7 @@ int ambR_draw_shape(AWindow * Wnd, int * Coords[]){
    Text drawing functions work, debug client code instead if it segfaults */
 
 int ambR_draw_text(AWindow * Wnd, char * text, int x, int y){
-	//XDrawString(Wnd->Renderer->rDisplay, Wnd->XWindow, Wnd->XGC, y, x, text, strlen(text));
-	cairo_select_font(Wnd->Canvas, "Serif", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
-	cairo_scale_font(Wnd->Canvas, 32.0);
-	cairo_move_to(Wnd->Canvas, x, y);
+	cairo_move_to(Wnd->Canvas, y, x);
 	cairo_show_text(Wnd->Canvas, text);
 	return 0;
 }

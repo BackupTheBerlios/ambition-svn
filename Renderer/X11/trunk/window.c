@@ -22,6 +22,8 @@ AWindow ambW_create(ARenderer * Renderer, char * wndTitle[], int x, int y, unsig
 	cairo_set_target_drawable(tWindow.Canvas, tWindow.Renderer->rDisplay, tWindow.XWindow);
 	cairo_set_rgb_color(tWindow.Canvas,0.0,0.0,0.0);
 	cairo_set_line_cap(tWindow.Canvas,1);
+	// Set Default Font
+	ambW_set_font(&tWindow,"Serif",12);
 	// Set Window title
 	ambW_set_title(&tWindow,wndTitle);
 	// Return the AWindow object
@@ -32,6 +34,7 @@ void ambW_draw(AWindow * Wnd){
 	int i = 0;
 	for(i = 0; i < Wnd->cCount; i = i +1){
 		// Make the child draw itself
+		printf("Child %d\n",i);
 		Wnd->Children[i]->draw(Wnd,i);//Wnd->Children[i]);
 		XFlush(Wnd->Renderer->rDisplay);
 	}
@@ -49,21 +52,11 @@ int ambW_add_child(AWindow * Wnd, AWidget * Child){
 	return 0;
 }
 
-/*int ambW_set_font(AWindow * Wnd, char * Font, int size){
-	XftPattern * FName, * IName;
-	XftResult * fResult;
-	char* fString;
-	sprintf(fString,"%s-%d:%d=%d",Font,size,XFT_ANTIALIAS,1);
-	FName = XftNameParse(fString);
-	IName = XftFontMatch (Wnd->Renderer->rDisplay, DefaultScreen(Wnd->Renderer->rDisplay), FName, fResult);
-	Wnd->XFont = *XftFontOpenPattern (Wnd->Renderer->rDisplay, IName);
-	//if (!Wnd->XFont.fid) {
-	//	fprintf(stderr, "XLoadQueryFont: failed loading font '%s'\n", Font);
-	//	return -1;
-	//}
-	//XSetFont(Wnd->Renderer->rDisplay, Wnd->XGC, Wnd->XFont.fid);
+int ambW_set_font(AWindow * Wnd, char * Font, int size){
+	cairo_select_font(Wnd->Canvas, Font, CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
+	cairo_scale_font(Wnd->Canvas, size);
 	return 0;
-}*/
+}
 
 int ambW_set_title(AWindow * Wnd, char * wndTitle[]){
 	// Set the Window Title
