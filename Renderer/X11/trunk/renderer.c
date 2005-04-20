@@ -102,3 +102,11 @@ int ambR_draw_arc(AWindow * Wnd, int xA, int yA, int radius, int Orient){
 	cairo_arc(Wnd->Canvas,xA,yA,radius,AStart,AEnd);
 	return 0;
 }
+
+int ambR_draw_rect(AWindow * Wnd, int x, int y, int w, int h){
+    ambR_draw_line(Wnd,x,y,x,(y+h));
+    ambR_draw_line(Wnd,x,y,(x+w),y);
+    ambR_draw_line(Wnd,(x+w),y,(x+w),(y+h));
+    ambR_draw_line(Wnd,x,(y+h),(x+w),(y+h));
+    return 0;
+}

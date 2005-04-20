@@ -25,5 +25,5 @@ int ambR_draw_line(AWindow * Wnd, int xA, int yA, int xB, int yB);
 int ambR_draw_shape(AWindow * Wnd, int * Coords[]);
 int ambR_draw_text(AWindow * Wnd, char * text, int x, int y);
 int ambR_draw_arc(AWindow * Wnd, int xA, int yA, int radius, int Orient);
-
+int ambR_draw_rect(AWindow * Wnd, int x, int y, int w, int h);
 #endif /* Renderer */
