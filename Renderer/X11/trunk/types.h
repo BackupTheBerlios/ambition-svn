@@ -8,7 +8,9 @@
 
 typedef struct _Renderer{
         Display * rDisplay;	// Pointer to X11 Display
+	int eCount[5];
         int cCount;		// Number of child Windows
+	struct _Callback * Events[5];
         struct _Window * Children[10];	// Array of Pointers to child Windows
 } ARenderer;
 
@@ -28,6 +30,21 @@ typedef union _Property{
 	void * tNastyHack;
 } AProperty;
 
+typedef struct _Coord{
+	int x;
+	int y;
+} ACoord;
+
+typedef struct _Size{
+	int w;
+	int h;
+} ASize;
+
+typedef struct _Bound{
+	ACoord Position;
+	ASize Rectangle;
+} ABound;
+
 /* Defines the AWidget type [Platform Independent] */
 
 typedef struct _Widget{
@@ -46,5 +63,10 @@ typedef union _Object{
         AWindow tWindow;	//
         AWidget tWidget;
 } AObject;
+
+typedef struct _Callback{
+	AWidget * Widget;
+	void (*call)(AWidget*,AProperty*);
+} ACallback;
 
 #endif /* TYPES */

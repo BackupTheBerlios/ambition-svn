@@ -43,6 +43,15 @@ int ambR_main(ARenderer * Renderer){
 					ambW_draw(Wnd);
 				}
 				break;
+			case KeyPress:
+				// Handle Keyboard Event
+				break;
+			case MotionEvent:
+				// Handle Mouse Move
+				break;
+			case ButtonPress:
+				// Handle Mouse Click
+				break;
 			default:
 				break;
 		}

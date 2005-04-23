@@ -20,6 +20,7 @@ AWindow ambW_create(ARenderer * Renderer, char * wndTitle[], int x, int y, unsig
                           3, BlackPixel(Renderer->rDisplay, screen_num),
                           WhitePixel(Renderer->rDisplay, screen_num));
 	cairo_set_target_drawable(tWindow.Canvas, tWindow.Renderer->rDisplay, tWindow.XWindow);
+	cairo_set_line_width (tWindow.Canvas, 3);
 	cairo_set_rgb_color(tWindow.Canvas,0.0,0.0,0.0);
 	cairo_set_line_cap(tWindow.Canvas,1);
 	// Set Default Font

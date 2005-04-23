@@ -12,7 +12,7 @@
 int ambR_init(ARenderer * Renderer);
 int ambR_close(ARenderer * Renderer);
 int ambR_main(ARenderer * Renderer);
-int ambR_register(AObject * Object, int Event, void (*AFunc)(AObject*));
+int ambR_register(AWidget* Widget, int Event, void (*AFunc)(AWidget*,AProperty*));
 int ambR_add_child(ARenderer * Renderer, AWindow * Wnd);
 
 // INTERNAL USE ONLY!
@@ -24,6 +24,9 @@ int _X11_flush(ARenderer * Renderer);
 int ambR_draw_line(AWindow * Wnd, int xA, int yA, int xB, int yB);
 int ambR_draw_shape(AWindow * Wnd, int * Coords[]);
 int ambR_draw_text(AWindow * Wnd, char * text, int x, int y);
+int ambR_draw_rect(AWindow * Wnd, int x, int y, int w, int h, int style);
 int ambR_draw_arc(AWindow * Wnd, int xA, int yA, int radius, int Orient);
 int ambR_draw_rect(AWindow * Wnd, int x, int y, int w, int h);
+ASize ambR_text_size(AWindow * Wnd, char * text);
+
 #endif /* Renderer */

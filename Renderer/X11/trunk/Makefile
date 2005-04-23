@@ -1,7 +1,7 @@
 CC=gcc
 LD=ld
 
-all: main test
+all: main
 
 main: renderer.c renderer.h window.c window.h widgets.c widgets.h types.h
 	$(CC) --version
@@ -9,11 +9,11 @@ main: renderer.c renderer.h window.c window.h widgets.c widgets.h types.h
 	$(LD) -r -o libambR.so renderer.o window.o widgets.o
 
 test: ambR_test.c main
-	$(CC) ambR_test.c -L. -lambR -L/usr/X11R6/lib -lX11 -lXft -I/usr/include/freetype2/ -o test -lcairo
+	$(CC) ambR_test.c -L. -lambR -L/usr/X11R6/lib -lX11 -I/usr/include/freetype2/ -o test -lcairo
 	chmod +x test
 
 sizeof: sizeof.c main
-	$(CC) sizeof.c -L/usr/X11R6/lib -lX11 -lXft -I/usr/include/freetype2/ -o sizeof -lcairo
+	$(CC) sizeof.c -L/usr/X11R6/lib -lX11 -I/usr/include/freetype2/ -o sizeof -lcairo
 	chmod +x sizeof
 
 install: main
